@@ -3,7 +3,8 @@ import { useAtom } from 'jotai';
 import { StyleSheet, Button, Text, View, ScrollView, TextInput } from 'react-native';
 import {basicInputAtom, updatePropertyAtom} from '../jotai'
 import {
-  NumericInputField
+  NumericInputField,
+  PlusMinusButtonGroup
 } from '../components'
 
 const HomeScreen = ({ navigation }) => {
@@ -17,7 +18,6 @@ const HomeScreen = ({ navigation }) => {
   
   return (
     <View>
-      <Text>Hello world</Text>
       <ScrollView>
         <View>
           {basicInput.map((item) => {
@@ -31,7 +31,9 @@ const HomeScreen = ({ navigation }) => {
               label={item.label}
               prepend={item.prepend}
               append={item.append}
-            />
+            >
+              <PlusMinusButtonGroup id={id}/>
+            </NumericInputField>
           })}
         </View>
         <Button

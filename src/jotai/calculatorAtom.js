@@ -2,8 +2,8 @@ import {atom} from 'jotai'
 
 export const propertyAtom = atom({
   housePrice: "800000",
-  downPaymentPercentage: "2",
-  interestRate: "2",
+  downPaymentPercentage: "20",
+  interestRate: "2.15",
   // loadType: "1",
   rentAmount: "2000",
   hoaAmount: "0",
@@ -20,5 +20,6 @@ export const updatePropertyAtom = atom((get) => get(propertyAtom), (_get, set, u
 
 export const basicInputAtom = atom([
   {label: 'House Price', id: 'housePrice', prepend: '$'},
-  {label: 'Down payment %', id: 'downPaymentPercentage', append: '%'}
+  {label: 'Down payment %', id: 'downPaymentPercentage', append: '%'},
+  {label: 'Interest Rate', id: 'interestRate', append: '%'}
 ])
