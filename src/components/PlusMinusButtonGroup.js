@@ -2,14 +2,14 @@ import React from 'react';
 import { StyleSheet, Button, Text, View, TextInput, Pressable} from 'react-native';
 import PlusMinusButton from './PlusMinusButton';
 
-const PlusMinusButtonGroup = ({id, ...props}) => {
+const PlusMinusButtonGroup = ({id, delta, fixed, onPressed, ...props}) => {
 
   const handlePlusPress = (id) => {
-    console.log(id);
+    onPressed(id, delta, fixed);
   }
 
   const handleMinusPress = (id) => {
-    console.log(id);
+    onPressed(id, -1*delta, fixed);
   }  
 
   return (

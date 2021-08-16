@@ -1,6 +1,37 @@
 import React from 'react';
 import { StyleSheet, Button, Text, View, TextInput } from 'react-native';
 
+const NumericInputField = ({label, value, id, prepend, append, onChangeText, ...props}) => {
+  
+  return (
+    <View style={styles.container}>
+      <Text>{label}</Text>
+      <View style={styles.wapprer}>
+        <View>
+          <View style={styles.inputField}>
+            {prepend ? <Text>{prepend}</Text> : null}
+            <TextInput
+              selectTextOnFocue={true}
+              style={styles.input}
+              autoFocus={true}
+              keyboardType="numeric"
+              value={value}
+              onChangeText={(val) => {
+                onChangeText({[id]: val})
+              }}
+            />
+            {append ? <Text>{append}</Text> : null}
+          </View>
+        </View>
+        <View>
+          {props.children}
+        </View>
+      </View>      
+    </View>
+  )
+}
+
+
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
@@ -37,35 +68,5 @@ const styles = StyleSheet.create({
     // padding: 10,
   },  
 })
-
-const NumericInputField = ({label, value, id, prepend, append, onChangeText, ...props}) => {
-  
-  return (
-    <View style={styles.container}>
-      <Text>{label}</Text>
-      <View style={styles.wapprer}>
-        <View>
-          <View style={styles.inputField}>
-            {prepend ? <Text>{prepend}</Text> : null}
-            <TextInput
-              selectTextOnFocue={true}
-              style={styles.input}
-              autoFocus={true}
-              keyboardType="numeric"
-              value={value}
-              onChangeText={(val) => {
-                onChangeText({[id]: val})
-              }}
-            />
-            {append ? <Text>{append}</Text> : null}
-          </View>
-        </View>
-        <View>
-          {props.children}
-        </View>
-      </View>      
-    </View>
-  )
-}
 
 export default NumericInputField;

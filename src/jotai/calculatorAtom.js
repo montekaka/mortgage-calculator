@@ -13,13 +13,22 @@ export const propertyAtom = atom({
   maintenance: "0"
 })
 
+export const basicInputAtom = atom([
+  {label: 'House Price', id: 'housePrice', prepend: '$', delta: 1000},
+  {label: 'Down payment', id: 'downPaymentPercentage', append: '%', delta: 5},
+  {label: 'Interest Rate', id: 'interestRate', append: '%', delta: 0.1, fixed: 2}
+])
+
 export const updatePropertyAtom = atom((get) => get(propertyAtom), (_get, set, update) => {
   const prevState = _get(propertyAtom);
   set(propertyAtom, {...prevState, ...update})
 })
 
-export const basicInputAtom = atom([
-  {label: 'House Price', id: 'housePrice', prepend: '$'},
-  {label: 'Down payment %', id: 'downPaymentPercentage', append: '%'},
-  {label: 'Interest Rate', id: 'interestRate', append: '%'}
-])
+export const updatePropertyDeltaAtom = atom(null, (get, set, changes) => {
+  const {id, delta, fixed} = changes;
+  const prevState = get(propertyAtom);
+  const target = prevState[id];
+  const value = Number(target) + delta;
+  const update = {[id]: value.toFixed(fixed ? fixed : 0).toString()};
+  set(propertyAtom, {...prevState, ...update})
+})
