@@ -6,12 +6,27 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   inputField: {
     display: 'flex',
-    flexDirection: 'row'
-  }
+    flexDirection: 'row',    
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+  },
+  input: {
+    paddingHorizontal: 2,
+    width: 120,
+    textAlign: 'right'
+    // height: 40,
+    // margin: 12,
+    // borderWidth: 1,
+    // padding: 10,
+  },  
 })
 
 const NumericInputField = (props) => {
@@ -24,6 +39,7 @@ const NumericInputField = (props) => {
         <View style={styles.inputField}>
           {prepend ? <Text>{prepend}</Text> : null}
           <TextInput
+            style={styles.input}
             autoFocus={true}
             keyboardType="numeric"
             value={value}
