@@ -7,7 +7,8 @@ import {basicInputAtom,
   loanTypesAtom,
   loanTypeAtom,
   getLoadTypeLabelAtom,
-  getMontlyMortgagePaymentAtom
+  getMontlyMortgagePaymentAtom,
+  getDownpaymentAmountAtom
 } from '../jotai'
 import {
   NumericInputField,
@@ -24,6 +25,9 @@ const HomeScreen = ({ navigation }) => {
   const [loanType, setLoanType] = useAtom(loanTypeAtom);
   const [loadTypeLabel] = useAtom(getLoadTypeLabelAtom);
   const [monthlyPayment] = useAtom(getMontlyMortgagePaymentAtom);
+
+  // set up down payment amount
+  // const [downpayment] = useAtom(getDownpaymentAmountAtom);
 
   const handleInputChange = (data) => {
     updatePropertyState(data)
@@ -43,7 +47,13 @@ const HomeScreen = ({ navigation }) => {
       <View>
         <View style={styles.summaryWrapper}>
           <Text style={styles.summaryNumbers}>$ {monthlyPayment}</Text>
-          <Text>Monthly payment</Text>          
+          <Text>Monthly payment</Text>                    
+        </View>
+        <View style={styles.statsContainer}>
+          <View style={styles.statCard}>
+          <Text style={styles.statCardTitle}>[DOWN PAYMENT]</Text>
+          <Text style={styles.statCardSubtitle}>[DOWN PAYMENT]</Text>
+          </View>          
         </View>
         <View style={styles.wrapper}>
           <>
@@ -95,14 +105,38 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   summaryWrapper: {
-    height: 200,
+    height: 100,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
   },
   summaryNumbers: {
     fontSize: 36
-  }
+  },
+  statsContainer: {
+    margin: 10,
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  statCard: {
+    width: 100,
+    height: 120,
+    borderRadius: 12,
+    backgroundColor: "#122133",
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: 10
+  },
+  statCardTitle: {
+    color: '#ffffff',
+    fontSize: 18,
+    textAlign: 'right'
+  },
+  statCardSubtitle: {
+    color: '#ffffff',
+    fontSize: 12,
+    textAlign: 'right'
+  }  
 })
 
 export default HomeScreen

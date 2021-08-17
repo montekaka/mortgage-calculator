@@ -68,3 +68,8 @@ export const getMontlyMortgagePaymentAtom = atom((get) => {
   const pmt = princple * ( r * e ) / (e - 1);
   return pmt.toFixed(2).toString();
 })
+
+export const getDownpaymentAmountAtom = atom((get) => {
+  const {housePrice, downPaymentPercentage} = get(propertyAtom);
+  return Number(housePrice) * Number(downPaymentPercentage) / 100;
+})
