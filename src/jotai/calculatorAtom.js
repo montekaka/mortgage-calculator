@@ -13,6 +13,13 @@ export const propertyAtom = atom({
   maintenance: "0"
 })
 
+export const loanTypeAtom = atom(8)
+
+export const loanTypesAtom = atom([
+  'Int-Only','3/1 ARM', '5/1 ARM','7/1 ARM','10 Fixed',
+  '15 Fixed','20 Fixed','25 Fixed','30 Fixed','40 Fixed'
+])
+
 export const basicInputAtom = atom([
   {label: 'House Price', id: 'housePrice', prepend: '$', delta: 1000},
   {label: 'Down payment', id: 'downPaymentPercentage', append: '%', delta: 5},
@@ -31,4 +38,10 @@ export const updatePropertyDeltaAtom = atom(null, (get, set, changes) => {
   const value = Number(target) + delta;
   const update = {[id]: value.toFixed(fixed ? fixed : 0).toString()};
   set(propertyAtom, {...prevState, ...update})
+})
+
+export const getLoadTypeLabelAtom = atom((get) => {
+  const loanTypeId = get(loanTypeAtom);
+  const loanTypes = get(loanTypesAtom);
+  return loanTypes[loanTypeId];
 })

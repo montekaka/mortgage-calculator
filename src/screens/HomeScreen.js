@@ -1,17 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useAtom } from 'jotai';
-import { StyleSheet, Button, Text, View, ScrollView, TextInput } from 'react-native';
-import {basicInputAtom, updatePropertyAtom, updatePropertyDeltaAtom} from '../jotai'
+import { StyleSheet, Button, Text, View, SafeAreaView, TextInput } from 'react-native';
+import {basicInputAtom, 
+  updatePropertyAtom, 
+  updatePropertyDeltaAtom,
+  loanTypesAtom,
+  loanTypeAtom,
+  getLoadTypeLabelAtom
+} from '../jotai'
 import {
   NumericInputField,
-  PlusMinusButtonGroup
+  PlusMinusButtonGroup,
+  PickerView
 } from '../components'
 
 const HomeScreen = ({ navigation }) => {
-
+  
   const [basicInput] = useAtom(basicInputAtom);
   const [propertyState, updatePropertyState] = useAtom(updatePropertyAtom);
   const [, updatePropertyDelta] = useAtom(updatePropertyDeltaAtom);
+  const [loanTypes] = useAtom(loanTypesAtom);
+  const [loanType, setLoanType] = useAtom(loanTypeAtom);
+  const [loadTypeLabel] = useAtom(getLoadTypeLabelAtom)
 
   const handleInputChange = (data) => {
     updatePropertyState(data)
@@ -21,37 +31,53 @@ const HomeScreen = ({ navigation }) => {
     updatePropertyDelta({id, delta, fixed})
   }
 
+  const handleLoadTypeChanged = (id) => {
+    setLoanType(id);
+    // setLoanVisiable(false);
+  }
+
   return (
-    <View>
+    <SafeAreaView>
       <View>
         <View style={styles.wrapper}>
-          {basicInput.map((item) => {
-            const id = item.id ? item.id : "";
-            const value = propertyState[id];
-            return <View key={id} style={styles.itemContainer}>
-                <NumericInputField         
-                  id={id} 
-                  onChangeText={handleInputChange}
-                  value={value} 
-                  label={item.label}
-                  prepend={item.prepend}
-                  append={item.append}
-                >
-                  <PlusMinusButtonGroup 
+          <>
+            {basicInput.map((item) => {
+              const id = item.id ? item.id : "";
+              const value = propertyState[id];
+              return (
+                <View key={id} style={styles.itemContainer}>
+                  <NumericInputField         
                     id={id} 
-                    delta={item.delta}
-                    fixed={item.fixed}
-                    onPressed={handlePlusMinusPressed}/>
-                </NumericInputField>
-            </View>
-          })}
+                    onChangeText={handleInputChange}
+                    value={value} 
+                    label={item.label}
+                    prepend={item.prepend}
+                    append={item.append}
+                  >
+                    <PlusMinusButtonGroup 
+                      id={id} 
+                      delta={item.delta}
+                      fixed={item.fixed}
+                      onPressed={handlePlusMinusPressed}/>
+                  </NumericInputField>
+                </View>
+              )
+            })}            
+          </>
+          <PickerView 
+            name={"Loan type"}
+            selectedText={loadTypeLabel}
+            selectedValue={loanType}
+            options={loanTypes}
+            setSelected={handleLoadTypeChanged}
+          />              
         </View>
         <Button
           title="Advanced"
           onPress={() => navigation.navigate('Advanced')}
         />
-      </View>
-    </View>
+      </View>  
+    </SafeAreaView>
   )
 }
 

@@ -11,6 +11,7 @@ const NumericInputField = ({label, value, id, prepend, append, onChangeText, ...
           <View style={styles.inputField}>
             {prepend ? <Text>{prepend}</Text> : null}
             <TextInput
+              editable={false}
               selectTextOnFocue={true}
               style={styles.input}
               autoFocus={true}
