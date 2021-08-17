@@ -51,8 +51,8 @@ const HomeScreen = ({ navigation }) => {
         </View>
         <View style={styles.statsContainer}>
           <View style={styles.statCard}>
-          <Text style={styles.statCardTitle}>[DOWN PAYMENT]</Text>
-          <Text style={styles.statCardSubtitle}>[DOWN PAYMENT]</Text>
+          <Text style={styles.statCardTitle}>DOWN PAYMENT</Text>
+          <Text style={styles.statCardSubtitle}>Down payment</Text>
           </View>          
         </View>
         <View style={styles.wrapper}>
