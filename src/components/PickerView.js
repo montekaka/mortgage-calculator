@@ -42,7 +42,7 @@ const PickerView = ({name, setSelected, selectedText, selectedValue, options, ..
                 }}
               >
                 <ListItem.Content>
-                  <ListItem.Title>{opt}</ListItem.Title>
+                  <ListItem.Title>{opt.label}</ListItem.Title>
                 </ListItem.Content>
                 {idx === selectedValue ? <ListItem.CheckBox checked={true}/> : null}
               </ListItem>

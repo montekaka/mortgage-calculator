@@ -16,8 +16,16 @@ export const propertyAtom = atom({
 export const loanTypeAtom = atom(8)
 
 export const loanTypesAtom = atom([
-  'Int-Only','3/1 ARM', '5/1 ARM','7/1 ARM','10 Fixed',
-  '15 Fixed','20 Fixed','25 Fixed','30 Fixed','40 Fixed'
+  {label: 'Int-Only', years: 30, interestOnly: 1},
+  {label: '3/1 ARM', years: 30, interestOnly: 1},
+  {label: '5/1 ARM', years: 30, interestOnly: 1},
+  {label: '7/1 ARM', years: 30, interestOnly: 1},
+  {label: '10 years Fixed', years: 10, interestOnly: 0},
+  {label: '15 years Fixed', years: 15, interestOnly: 0},
+  {label: '20 years Fixed', years: 20, interestOnly: 0},
+  {label: '25 years Fixed', years: 25, interestOnly: 0},
+  {label: '30 years Fixed', years: 30, interestOnly: 0},
+  {label: '40 years Fixed', years: 40, interestOnly: 0},  
 ])
 
 export const basicInputAtom = atom([
@@ -43,5 +51,20 @@ export const updatePropertyDeltaAtom = atom(null, (get, set, changes) => {
 export const getLoadTypeLabelAtom = atom((get) => {
   const loanTypeId = get(loanTypeAtom);
   const loanTypes = get(loanTypesAtom);
-  return loanTypes[loanTypeId];
+  return loanTypes[loanTypeId]['label'];
+})
+
+export const getMontlyMortgagePaymentAtom = atom((get) => {
+  const loanTypeId = get(loanTypeAtom);
+  const loanTypes = get(loanTypesAtom);
+  const months = loanTypes[loanTypeId]['years'] * 12
+  // calculate the annually interest rate
+  const {housePrice, downPaymentPercentage, interestRate} = get(propertyAtom);
+  const r = Math.pow((1 + Number(interestRate) / 100), 1/12) - 1;
+  
+  // const r = Number(interestRate) / 12;
+  const princple = Number(housePrice) * (1 - Number(downPaymentPercentage) / 100);
+  const e = Math.pow((1+r), months)
+  const pmt = princple * ( r * e ) / (e - 1);
+  return pmt.toFixed(2).toString();
 })

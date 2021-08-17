@@ -6,7 +6,8 @@ import {basicInputAtom,
   updatePropertyDeltaAtom,
   loanTypesAtom,
   loanTypeAtom,
-  getLoadTypeLabelAtom
+  getLoadTypeLabelAtom,
+  getMontlyMortgagePaymentAtom
 } from '../jotai'
 import {
   NumericInputField,
@@ -21,7 +22,8 @@ const HomeScreen = ({ navigation }) => {
   const [, updatePropertyDelta] = useAtom(updatePropertyDeltaAtom);
   const [loanTypes] = useAtom(loanTypesAtom);
   const [loanType, setLoanType] = useAtom(loanTypeAtom);
-  const [loadTypeLabel] = useAtom(getLoadTypeLabelAtom)
+  const [loadTypeLabel] = useAtom(getLoadTypeLabelAtom);
+  const [monthlyPayment] = useAtom(getMontlyMortgagePaymentAtom);
 
   const handleInputChange = (data) => {
     updatePropertyState(data)
@@ -39,6 +41,10 @@ const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView>
       <View>
+        <View style={styles.summaryWrapper}>
+          <Text style={styles.summaryNumbers}>$ {monthlyPayment}</Text>
+          <Text>Monthly payment</Text>          
+        </View>
         <View style={styles.wrapper}>
           <>
             {basicInput.map((item) => {
@@ -87,6 +93,15 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     marginBottom: 10
+  },
+  summaryWrapper: {
+    height: 200,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  summaryNumbers: {
+    fontSize: 36
   }
 })
 
